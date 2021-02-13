@@ -1,0 +1,79 @@
+html,
+body {
+  overflow-x: hidden;
+  height: 100vh;
+}
+.font-12 {
+  font-size: 12px;
+}
+label {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.flex-content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.flex-content .left-col {
+  width: 60%;
+}
+.flex-content .left-col img {
+  height: 100vh;
+  object-fit: cover;
+}
+.flex-content .right-col {
+  width: 40%;
+}
+.login__form {
+  padding: 50px 30px;
+  background: #fff;
+  margin: 0px 30px;
+  -webkit-box-shadow: 0px 0px 22px 0px rgba(196, 190, 196, 1);
+  -moz-box-shadow: 0px 0px 22px 0px rgba(196, 190, 196, 1);
+  box-shadow: 0px 0px 22px 0px rgba(196, 190, 196, 1);
+  border-left: 5px solid limegreen;
+}
+.custom-btn {
+  border: unset;
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  background: limegreen;
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.form-control {
+  border: 1px solid limegreen;
+  background: #fff;
+  border-radius: unset;
+  height: 45px;
+}
+.custom-navbar a {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.inner__form {
+  width: 50%;
+  margin: 0px auto;
+}
+select.form-select {
+  border: 1px solid limegreen;
+  border-radius: 0px;
+  height: 45px;
+}
+textarea {
+  height: 150px !important;
+}
+.link {
+  padding-top: 20px;
+}
+.link a {
+  font-size: 14px;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: 700;
+}
