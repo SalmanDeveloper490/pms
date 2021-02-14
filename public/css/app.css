@@ -85,3 +85,21 @@ textarea {
   text-transform: uppercase;
   font-size: 18px;
 }
+
+/*  media queries */
+@media only screen and (max-width: 991px) {
+  .flex-content {
+    display: block;
+    padding-top: 80px;
+  }
+  .flex-content .left-col {
+    display: none;
+  }
+  .flex-content .right-col {
+    width: 100%;
+  }
+  table th,
+  table td {
+    font-size: 12px;
+  }
+}
