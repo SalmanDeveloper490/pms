@@ -7,6 +7,7 @@ const path = require("path");
 const authRoutes = require("./routes/auth_routes");
 const passwordCatRoutes = require("./routes/password_category_routes");
 const passwordDetailRoutes = require("./routes/password_details_routes");
+const pageNotFound = require("./routes/not_found");
 const flash = require("express-flash");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use(passwordCatRoutes);
 app.use(passwordDetailRoutes);
+app.use(pageNotFound);
 // routes
 
 // listening Server

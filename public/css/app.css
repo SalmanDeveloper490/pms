@@ -77,3 +77,11 @@ textarea {
   text-transform: uppercase;
   font-weight: 700;
 }
+.error-actions a {
+  background: limegreen;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 18px;
+}
