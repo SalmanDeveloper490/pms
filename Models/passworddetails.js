@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
-const schema = mongoose.Schema;
-
 const PasswordDetailsSchema = new mongoose.Schema(
   {
+    userID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
     password_cat_name: {
       type: String,
       required: true,

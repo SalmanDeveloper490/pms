@@ -1,9 +1,9 @@
+require("dotenv").config();
 // import mongoose module
 const mongoose = require("mongoose");
 
 //Set up default mongoose connection
-const mongoDB =
-  "mongodb+srv://mongodbuser:dev12345@cluster0.vb2nf.mongodb.net/pms?retryWrites=true&w=majority";
+const mongoDB = process.env.DB;
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

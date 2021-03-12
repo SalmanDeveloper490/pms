@@ -4,7 +4,10 @@ const passswordCategoryView = (req, res) => {
   res.render("add_password_category");
 };
 
-const addPasswordCategory = (req, res) => {
+const addPasswordCategory = async (req, res) => {
+  const user = req.user;
+  const id = user._id;
+  //console.log(userId)
   const { pass_cat_name } = req.body;
   // validate request
   if (!pass_cat_name) {
@@ -14,6 +17,7 @@ const addPasswordCategory = (req, res) => {
 
   // Create Password Category
   const passwordCategory = new PasswordCategoryModel({
+    userID: id,
     pass_cat_name,
   });
 
@@ -30,45 +34,56 @@ const addPasswordCategory = (req, res) => {
     });
 };
 
-const viewPasswordCategory = (req, res) => {
+const viewPasswordCategory = async (req, res) => {
+  const user = req.user;
+  const id = user._id;
   const perPage = 5;
   const page = req.params.page || 1;
-  PasswordCategoryModel.find({})
+  PasswordCategoryModel.find({ userID: id })
     .skip(perPage * page - perPage)
     .limit(perPage)
     .sort({ updatedAt: -1 })
     .exec(function (err, data) {
       if (err) throw err;
-      PasswordCategoryModel.countDocuments({}).exec((err, count) => {
-        if (err) throw err;
-        res.render("view_password_categories", {
-          data: data,
-          current: page,
-          pages: Math.ceil(count / perPage),
-        });
-      });
+      PasswordCategoryModel.countDocuments({ userID: id }).exec(
+        (err, count) => {
+          if (err) throw err;
+          res.render("view_password_categories", {
+            data: data,
+            count: count,
+            current: page,
+            pages: Math.ceil(count / perPage),
+          });
+        }
+      );
     });
 };
 
-const passwordCategoryPagination = (req, res) => {
-  const perPage = 5;
-  const page = req.params.page || 1;
-  PasswordCategoryModel.find({})
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .sort({ updatedAt: -1 })
-    .exec(function (err, data) {
-      if (err) throw err;
-      PasswordCategoryModel.countDocuments({}).exec((err, count) => {
-        if (err) throw err;
-        res.render("view_password_categories", {
-          data: data,
-          current: page,
-          pages: Math.ceil(count / perPage),
-        });
-      });
-    });
-};
+// const passwordCategoryPagination = async (req, res) => {
+//   const user = req.user;
+//   const id = user._id;
+//   console.log(id);
+//   const perPage = 5;
+//   const page = req.params.page || 1;
+//   PasswordCategoryModel.find({ userID: id })
+//     .skip(perPage * page - perPage)
+//     .limit(perPage)
+//     .sort({ updatedAt: -1 })
+//     .exec(function (err, data) {
+//       if (err) throw err;
+//       PasswordCategoryModel.countDocuments({ userID: id }).exec(
+//         (err, count) => {
+//           if (err) throw err;
+//           res.render("view_password_categories", {
+//             data: data,
+//             count: count,
+//             current: page,
+//             pages: Math.ceil(count / perPage),
+//           });
+//         }
+//       );
+//     });
+// };
 
 // editing Records
 const editPasswordCategory = (req, res) => {
@@ -107,7 +122,7 @@ module.exports = {
   passswordCategoryView,
   addPasswordCategory,
   viewPasswordCategory,
-  passwordCategoryPagination,
+  // passwordCategoryPagination,
   editPasswordCategory,
   postEditPasswordCategory,
   deletePasswordCategory,

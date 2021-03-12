@@ -6,7 +6,6 @@ const {
   addPasswordDetails,
   postPasswordDetails,
   passwordDetails,
-  passwordPagination,
   editPassword,
   postEditPassword,
   deletePassword,
@@ -18,11 +17,10 @@ const { checkAuthenticated } = require("../middlewares/auth");
 // Routes
 router.get("/add_password_details", checkAuthenticated, addPasswordDetails);
 router.post("/add_password_details", postPasswordDetails);
-router.get("/view_password_details", checkAuthenticated, passwordDetails);
 router.get(
-  "/view_password_details/:page",
+  "/view_password_details/:page?",
   checkAuthenticated,
-  passwordPagination
+  passwordDetails
 );
 router.get("/view_password_details/edit/:id", checkAuthenticated, editPassword);
 router.post("/view_password_details/edit/", postEditPassword);

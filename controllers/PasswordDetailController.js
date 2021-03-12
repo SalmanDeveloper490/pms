@@ -1,14 +1,19 @@
 const PasswordCategoryModel = require("../Models/passwordcategories");
 const PasswordDetailsModel = require("../Models/passworddetails");
 
-const addPasswordDetails = (req, res) => {
-  PasswordCategoryModel.find({}, (err, data) => {
+const addPasswordDetails = async (req, res) => {
+  const user = req.user;
+  const id = user._id;
+  PasswordCategoryModel.find({ userID: id }, (err, data) => {
     if (err) console.log(err);
     res.render("add_password_details", { data: data });
   });
 };
 
-const postPasswordDetails = (req, res) => {
+const postPasswordDetails = async (req, res) => {
+  const user = req.user;
+  const id = user._id;
+
   const { password_cat_name, password_details } = req.body;
   // validate request
   if (!password_cat_name || !password_details) {
@@ -17,6 +22,7 @@ const postPasswordDetails = (req, res) => {
   }
 
   const passwordDetailsModel = new PasswordDetailsModel({
+    userID: id,
     password_cat_name,
     password_details,
   });
@@ -35,39 +41,22 @@ const postPasswordDetails = (req, res) => {
     });
 };
 
-const passwordDetails = (req, res) => {
+const passwordDetails = async (req, res) => {
+  const user = req.user;
+  const id = user._id;
   const perPage = 5;
   const page = req.params.page || 1;
-  PasswordDetailsModel.find({})
+  PasswordDetailsModel.find({ userID: id })
     .skip(perPage * page - perPage)
     .limit(perPage)
     .sort({ updatedAt: -1 })
     .exec(function (err, data) {
       if (err) throw err;
-      PasswordDetailsModel.countDocuments({}).exec((err, count) => {
+      PasswordDetailsModel.countDocuments({ userID: id }).exec((err, count) => {
         if (err) throw err;
         res.render("view_password_details", {
           data: data,
-          current: page,
-          pages: Math.ceil(count / perPage),
-        });
-      });
-    });
-};
-
-const passwordPagination = (req, res) => {
-  const perPage = 5;
-  const page = req.params.page || 1;
-  PasswordDetailsModel.find({})
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .sort({ updatedAt: -1 })
-    .exec(function (err, data) {
-      if (err) throw err;
-      PasswordDetailsModel.countDocuments({}).exec((err, count) => {
-        if (err) throw err;
-        res.render("view_password_details", {
-          data: data,
+          count: count,
           current: page,
           pages: Math.ceil(count / perPage),
         });
@@ -116,7 +105,6 @@ module.exports = {
   addPasswordDetails,
   postPasswordDetails,
   passwordDetails,
-  passwordPagination,
   editPassword,
   postEditPassword,
   deletePassword,

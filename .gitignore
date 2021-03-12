@@ -1,2 +1,5 @@
-node_modules/node_modules
-node_modules
+# ignoring node modules folder 
+node_modules/
+
+# ignoring dot env file 
+.env
